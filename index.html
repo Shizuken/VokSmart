@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VokSmart - Platform Software Mahasiswa Vokasi</title>
+    <link rel="icon" href="data:,">
+    <meta name="description" content="Platform terpercaya untuk software mahasiswa Fakultas Vokasi dengan harga terjangkau">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="images/LOGO VOKSMART.png" alt="VokSmart Logo" class="logo-image">
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#departments">Departemen</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+            
+            <div class="auth-section">
+                <div id="authButtons">
+                    <button class="btn btn-outline" onclick="openModal('loginModal')">Masuk</button>
+                    <button class="btn btn-primary" onclick="openModal('signupModal')">Daftar</button>
+                </div>
+                <div id="userProfile" style="display: none;">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userName">User</span>
+                    <button class="btn btn-outline" onclick="logout()">Keluar</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background"></div> <!-- Ini elemen background baru -->
+        <div class="hero-content">
+            <h1 class="hero-title">VokSmart</h1>
+            <p class="hero-subtitle">Platform Pilihan Mahasiswa Smart<br>Wujudkan Impian Anda Dengan Software Terbaik</p>
+            <a href="#departments" class="btn btn-hero">Jelajahi Produk</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Kenalan Dengan VokSmart!</h2>
+                    <p>VokSmart adalah platform inovatif yang dirancang khusus untuk mahasiswa Fakultas Vokasi yang ingin mengembangkan skill dan kreativitas mereka.</p>
+                    <p>Kami menyediakan software berkualitas dengan harga terjangkau berdasarkan survei kebutuhan mahasiswa Fakultas Vokasi ITS.</p>
+                    <p>Hanya di VokSmart, Anda bisa mendapatkan software yang Anda butuhkan dengan harga yang ramah di kantong mahasiswa.</p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Harga Terjangkau</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Software Original</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Support 24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="images/FV.jpg" alt="Fakultas Vokasi">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section id="departments" class="departments">
+        <div class="container">
+            <h2 class="section-title">Departemen & Software Unggulan</h2>
+            
+            <div class="department-grid">
+                <!-- Statistika Bisnis -->
+                <div class="department-card">
+                    <div class="department-header">
+                        <img src="images/dsb2.png" alt="Statistika Bisnis" class="department-logo">
+                        <h3>Statistika Bisnis</h3>
+                        <p>Software analisis data dan statistik</p>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>Minitab</h4>
+                                <p>Statistik deskriptif & inferensial</p>
+                                <div class="product-price">Rp 17.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/minitab.png" alt="Minitab">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('Minitab', 17000, 'images/minitab.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>SPSS</h4>
+                                <p>Statistik lanjutan & analisis data</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/spss logo.png" alt="SPSS">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('SPSS', 15000, 'images/spss logo.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>Tableau / Power BI Pro</h4>
+                                <p>Visualisasi data profesional</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/tablue.png" alt="Tableau">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('Tableau Power BI Pro', 15000, 'images/tablue.png')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instrumentasi -->
+                <div class="department-card">
+                    <div class="department-header">
+                        <img src="images/instrumentasi (1).png" alt="Instrumentasi" class="department-logo">
+                        <h3>Instrumentasi</h3>
+                        <p>Software simulasi dan kontrol</p>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>MATLAB & Simulink</h4>
+                                <p>Simulasi sistem kendali</p>
+                                <div class="product-price">Rp 14.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/matlamb.png" alt="MATLAB">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('MATLAB Simulink', 14000, 'images/matlamb.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>Proteus</h4>
+                                <p>Simulasi rangkaian elektronik</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/protueus.png" alt="Proteus">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('Proteus', 15000, 'images/protueus.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>LabVIEW</h4>
+                                <p>Pemrograman grafis & akuisisi data</p>
+                                <div class="product-price">Rp 16.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/Labview.png" alt="LabVIEW">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('LabVIEW', 16000, 'images/Labview.png')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mesin Industri -->
+                <div class="department-card">
+                    <div class="department-header">
+                        <img src="images/cropped-DTMI-tumb (1).png" alt="Mesin Industri" class="department-logo">
+                        <h3>Mesin Industri</h3>
+                        <p>Software desain & simulasi mekanik</p>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>SolidWorks</h4>
+                                <p>Desain mekanik 3D</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/SolidWorks.png" alt="SolidWorks">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('SolidWorks', 15000, 'images/SolidWorks.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>ANSYS</h4>
+                                <p>Simulasi engineering</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/ansys.png" alt="ANSYS">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('ANSYS', 15000, 'images/ansys.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>CATIA</h4>
+                                <p>Desain industri advanced</p>
+                                <div class="product-price">Rp 12.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/catia.png" alt="CATIA">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('CATIA', 12000, 'images/catia.png')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Infrastruktur Sipil -->
+                <div class="department-card">
+                    <div class="department-header">
+                        <img src="images/JATS (1).png" alt="Infrastruktur Sipil" class="department-logo">
+                        <h3>Infrastruktur Sipil</h3>
+                        <p>Software desain & konstruksi sipil</p>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>AutoCAD</h4>
+                                <p>Gambar teknik sipil</p>
+                                <div class="product-price">Rp 18.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/autocad.webp" alt="AutoCAD">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('AutoCAD', 18000, 'images/autocad.webp')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>STAAD.Pro</h4>
+                                <p>Desain struktur</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/staad.png" alt="STAAD Pro">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('STAAD.Pro', 15000, 'images/staad.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>SketchUp Pro</h4>
+                                <p>Pemodelan arsitektur 3D</p>
+                                <div class="product-price">Rp 16.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/scetch.png" alt="SketchUp Pro">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('SketchUp Pro', 16000, 'images/scetch.png')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kimia Industri -->
+                <div class="department-card">
+                    <div class="department-header">
+                        <img src="images/logo-DTKI-ok (1).png" alt="Kimia Industri" class="department-logo">
+                        <h3>Kimia Industri</h3>
+                        <p>Software simulasi proses kimia</p>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>Aspen Plus / Aspen HYSYS</h4>
+                                <p>Simulasi proses kimia</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/aspen.png" alt="Aspen Plus">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('Aspen Plus Aspen HYSYS', 15000, 'images/aspen.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>ChemCAD</h4>
+                                <p>Proses kimia & termodinamika</p>
+                                <div class="product-price">Rp 20.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/chem.jpeg" alt="ChemCAD">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('ChemCAD', 20000, 'images/chem.jpeg')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>ChemDraw</h4>
+                                <p>Gambar struktur molekul</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/chemdraw.png" alt="ChemDraw">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('ChemDraw', 15000, 'images/chemdraw.png')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Elektro Otomasi -->
+                <div class="department-card">
+                    <div class="department-header">
+                        <img src="images/logo-dteo-terbaru-13 (1).png" alt="Elektro Otomasi" class="department-logo">
+                        <h3>Elektro Otomasi</h3>
+                        <p>Software kontrol & otomasi industri</p>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>TIA Portal (Siemens)</h4>
+                                <p>Pemrograman PLC</p>
+                                <div class="product-price">Rp 16.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/tia.png" alt="TIA Portal">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('TIA Portal Siemens', 16000, 'images/tia.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>CX-One (Omron)</h4>
+                                <p>Konfigurasi PLC</p>
+                                <div class="product-price">Rp 18.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/cxone.png" alt="CX-One">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('CX-One Omron', 18000, 'images/cxone.png')">Beli Sekarang</button>
+                        </div>
+                        
+                        <div class="product-item">
+                            <div class="product-info">
+                                <h4>LabVIEW</h4>
+                                <p>Kontrol sistem, akuisisi data</p>
+                                <div class="product-price">Rp 15.000<span>/bulan</span></div>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/Labview.png" alt="LabVIEW">
+                            </div>
+                            <button class="btn btn-success buy-btn" onclick="goToPurchase('LabVIEW', 15000, 'images/Labview.png')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <div class="contact-item">
+                        <strong>Email:</strong> VokSmart@gmail.com
+                    </div>
+                    <div class="contact-item">
+                        <strong>Telepon:</strong> +62 851-7950-8514
+                    </div>
+                    <div class="contact-item">
+                        <strong>Alamat:</strong> Fakultas Vokasi, Institut Teknologi Sepuluh Nopember
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 VokSmart. Semua hak cipta dilindungi. Platform Software Mahasiswa Fakultas Vokasi.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Masuk ke Akun</h2>
+            <div id="loginAlert" class="alert" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Masuk</button>
+            </form>
+            <div class="modal-switch">
+                Belum punya akun? <a href="#" onclick="switchModal('loginModal', 'signupModal')">Daftar di sini</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Daftar Akun Baru</h2>
+            <div id="signupAlert" class="alert" style="display: none;"></div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Nama Lengkap</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Konfirmasi Password</label>
+                    <input type="password" id="signupConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Daftar</button>
+            </form>
+            <div class="modal-switch">
+                Sudah punya akun? <a href="#" onclick="switchModal('signupModal', 'loginModal')">Masuk di sini</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Function to handle purchase navigation
+        function goToPurchase(productName, price, image) {
+            // Store product data in localStorage for the purchase page
+            const productData = {
+                name: productName,
+                price: price,
+                image: image,
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('voksmart_selected_product', JSON.stringify(productData));
+            
+            // Redirect to purchase page
+            window.location.href = 'pembelian.html';
+        }
+    </script>
+</body>
+</html>

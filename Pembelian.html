@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembelian - VokSmart</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="images/LOGO VOKSMART.png" alt="VokSmart Logo" class="logo-image">
+                <span class="logo-text">VokSmart</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#about">Tentang</a></li>
+                <li><a href="index.html#departments">Departemen</a></li>
+                <li><a href="index.html#contact">Kontak</a></li>
+            </ul>
+            
+            <div class="auth-section">
+                <div id="authButtons">
+                    <button class="btn btn-outline" onclick="openModal('loginModal')">Masuk</button>
+                    <button class="btn btn-primary" onclick="openModal('signupModal')">Daftar</button>
+                </div>
+                <div id="userProfile" style="display: none;">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userName">User</span>
+                    <button class="btn btn-outline" onclick="logout()">Keluar</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Login Required Notice -->
+        <div id="loginRequired" class="login-required" style="display: none;">
+            <div class="login-required-content">
+                <h2>🔒 Login Diperlukan</h2>
+                <p>Silakan login terlebih dahulu untuk melanjutkan pembelian</p>
+                <div class="login-required-buttons">
+                    <button class="btn btn-primary" onclick="openModal('loginModal')">Masuk</button>
+                    <button class="btn btn-outline" onclick="openModal('signupModal')">Daftar Akun Baru</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purchase Content -->
+        <div id="purchaseContent" class="purchase-container">
+            <div class="purchase-header">
+                <h1>🛒 Konfirmasi Pembelian</h1>
+                <p>Lengkapi detail pembelian software Anda</p>
+            </div>
+            
+            <!-- Product Details -->
+            <div class="purchase-details">
+                <h2 style="margin-bottom: 20px; color: var(--primary-color);">📦 Detail Produk</h2>
+                
+                <div class="product-showcase">
+                    <div class="product-showcase-image">
+                        <img id="productImage" src="https://via.placeholder.com/100x100/ff6b35/ffffff?text=SW" alt="Product Image" style="width: 100px; height: 100px; object-fit: contain; border-radius: 8px; border: 2px solid var(--border-color);">
+                    </div>
+                    <div class="product-showcase-info">
+                        <h3 id="productName" style="color: var(--primary-color); margin-bottom: 10px;">Software Pilihan</h3>
+                        <p style="color: var(--text-light); margin-bottom: 15px;">Software berlisensi original untuk mahasiswa</p>
+                        <div class="product-price-display">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);" id="productPrice">Rp 15.000</span>
+                            <span style="color: var(--text-muted);">/bulan</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="purchase-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quantity">Jumlah Lisensi:</label>
+                            <div class="quantity-control">
+                                <button type="button" class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" id="quantity" value="1" min="1" max="10" readonly>
+                                <button type="button" class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="duration">Durasi Berlangganan:</label>
+                            <select id="duration" onchange="calculateTotal()">
+                                <option value="1">1 Bulan</option>
+                                <option value="3">3 Bulan (Diskon 5%)</option>
+                                <option value="6">6 Bulan (Diskon 10%)</option>
+                                <option value="12">12 Bulan (Diskon 15%)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Voucher Section -->
+            <div class="voucher-section">
+                <h2 style="margin-bottom: 20px; color: var(--primary-color);">🎫 Kode Voucher</h2>
+                <div class="voucher-input-group">
+                    <input type="text" id="voucherCode" placeholder="Masukkan kode voucher (opsional)" style="flex: 1; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px;">
+                    <button class="btn btn-outline" onclick="applyVoucher()" style="margin-left: 10px;">Terapkan</button>
+                </div>
+                <div id="voucherMessage" class="voucher-message" style="display: none; margin-top: 10px;"></div>
+                
+                <!-- Available Vouchers -->
+                <div class="available-vouchers">
+                    <p style="margin: 15px 0 10px 0; font-weight: 600; color: var(--text-dark);">Voucher Tersedia:</p>
+                    <div class="voucher-list">
+                        <div class="voucher-item" onclick="useVoucher('MAHASISWA10', 10)">
+                            <span class="voucher-code">MAHASISWA10</span>
+                            <span class="voucher-desc">Diskon 10% untuk mahasiswa</span>
+                        </div>
+                        <div class="voucher-item" onclick="useVoucher('NEWUSER15', 15)">
+                            <span class="voucher-code">NEWUSER15</span>
+                            <span class="voucher-desc">Diskon 15% untuk pengguna baru</span>
+                        </div>
+                        <div class="voucher-item" onclick="useVoucher('VOKASI20', 20)">
+                            <span class="voucher-code">VOKASI20</span>
+                            <span class="voucher-desc">Diskon 20% khusus Fakultas Vokasi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Price Summary -->
+            <div class="price-summary">
+                <h2 style="margin-bottom: 20px; color: var(--primary-color);">💰 Ringkasan Harga</h2>
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Harga per bulan:</span>
+                        <span id="pricePerMonth">Rp 15.000</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Jumlah lisensi:</span>
+                        <span id="quantityDisplay">1</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Durasi:</span>
+                        <span id="durationDisplay">1 bulan</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">Rp 15.000</span>
+                    </div>
+                    <div class="price-row discount-row" id="durationDiscountRow" style="display: none;">
+                        <span>Diskon durasi:</span>
+                        <span id="durationDiscount" class="discount-amount">-Rp 0</span>
+                    </div>
+                    <div class="price-row discount-row" id="voucherDiscountRow" style="display: none;">
+                        <span>Diskon voucher:</span>
+                        <span id="voucherDiscount" class="discount-amount">-Rp 0</span>
+                    </div>
+                    <div class="price-row total-row">
+                        <span>Total Pembayaran:</span>
+                        <span id="totalPrice">Rp 15.000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="payment-section">
+                <h2 style="margin-bottom: 20px; color: var(--primary-color);">💳 Pilih Metode Pembayaran</h2>
+                
+                <div class="payment-methods">
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="gopay" checked>
+                        <img src="data:image/jpeg;base64,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" alt="Gopay" class="payment-logo">
+                        <div class="payment-info">
+                            <h4>Gopay</h4>
+                            <p>Bayar praktis dengan Gopay</p>
+                        </div>
+                    </label>
+                    
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="qris">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAdVBMVEX///8BAQEAAABKSkqGhobBwcHq6ur39/dhYWF9fX3Nzc0WFhavr6+RkZGdnZ0SEhKlpaUnJyfV1dVAQEBoaGjk5OSXl5fd3d2FhYW1tbW+vr7Pz88iIiLHx8dFRUU4ODh4eHhQUFBPT09wcHBYWFgtLS3x8fED3M0bAAADQ0lEQVR4nO3ba0OiQBhAYZgU0zLLxDvWlvn/f+IaeAHmZRgIJafzfESY5qwJE7KeBwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgNsWqSK9tqfWkPs/UOg7X6jUYixpe2ZN2RcO257DZe0Ln9qew2X9ncLo4+5km7w039wZbPrJXsGraS/R6yA+cvyW2jSNN/X+VR9sYVm4Tp1F18lLk8ILSSIZOijZS7KMjxykNyX/Xr2iE7vBs11hb6T8I/VyLPRNDkPvC427CQeq7qEwte1QOKo6mG9d+EBh0dAUCgdSWG00CiksHZpC4cBfVKgTC63ULmxqTWNZmJ5UtcLU+JUKS8f9QeEuyNs964Wetpdk169ZuF/+6vPIKLsXYSgUPAqFdoa1C6MqP0ZwrcIOhfEmCuvobLfff8k6/Dk8kAoX07PhrqhwN7Qx/ahd+GkeubOqX5i5HR4WFV76iv/j66GhcHK+He4bC/OTKnHlVZuxUL3dx0rew1suPNwOd76wRyGFFLZe6PKZJtk4cvd6eLzi+44Wiqs2bbkUZBdkQo/u+N2TXlhh8ddA4XjZPVkm9wrC9KZQK1Qv2hTUZNDNWwZFhZ62b1b0oCX+pNBOpnC7yicaVsZSYZl124V3308g5ROnBUc2WRhGUcnDI40VesK7WPCwR5OFU6W21yr8/vI6n9i5eOGTUvdXK5QS36UjWyxcr8arvORcGkSDk0g4l8aF3lhP/LQsHJiNmykUL2GzeLfM9fCpqFD6LE6sCmtfDysWSomVCqVE/UQgr2kqBtYsFMY5FqY2GQq9mZ74YVdonIY0s5YK9c/i/sXcdyg3Xiidbt6yibdeqP+i+upr51ShN/P1xMCpQuldHKUSHSj0Qj3xMJArhd5M/6bFPyVeubBk6JqFxnfxuoXeV8liwlR4ttHGDYQFUnQsTHlPCktmIbEtDDvzjkE/KCrc9c8HzoVHxsN5fuD5PLlohP3UtuSB4555FuLMBpaFdoTC34FCaxS2xv3CjTuFvVfJWvnuFMoXRd/5QtXUf8Frv9BbPC4kj91mhv8FhRdG4e2j8PYJ97wds0r/SdfQo60AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA4j/CWGI+qs2J8QAAAABJRU5ErkJggg==" alt="QRIS" class="payment-logo">
+                        <div class="payment-info">
+                            <h4>QRIS</h4>
+                            <p>Scan QR code untuk pembayaran</p>
+                        </div>
+                    </label>
+                    
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="bank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9EQktbN1-OIyhNHgYK1Z4_PyV8m8v_LLf3A&s" alt="Virtual Account" class="payment-logo">
+                        <div class="payment-info">
+                            <h4>Virtual Account</h4>
+                            <p>Transfer melalui ATM/Internet Banking</p>
+                        </div>
+                    </label>
+                    
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="dana">
+                        <img src="data:image/png;base64,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" alt="DANA" class="payment-logo">
+                        <div class="payment-info">
+                            <h4>DANA</h4>
+                            <p>Bayar mudah dengan DANA</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Purchase Buttons -->
+            <div class="purchase-actions">
+                <button class="btn btn-outline" onclick="window.location.href='index.html'" style="margin-right: 15px;">
+                    ← Kembali ke Beranda
+                </button>
+                <button id="purchaseBtn" class="btn btn-primary btn-large" onclick="confirmPurchase()">
+                    🛒 Konfirmasi Pembelian
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 VokSmart. Semua hak cipta dilindungi. Platform Software Mahasiswa Fakultas Vokasi.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Masuk ke Akun</h2>
+            <div id="loginAlert" class="alert" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Masuk</button>
+            </form>
+            <div class="modal-switch">
+                Belum punya akun? <a href="#" onclick="switchModal('loginModal', 'signupModal')">Daftar di sini</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Daftar Akun Baru</h2>
+            <div id="signupAlert" class="alert" style="display: none;"></div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Nama Lengkap</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Konfirmasi Password</label>
+                    <input type="password" id="signupConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Daftar</button>
+            </form>
+            <div class="modal-switch">
+                Sudah punya akun? <a href="#" onclick="switchModal('signupModal', 'loginModal')">Masuk di sini</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Purchase page variables
+        let productData = { name: "Software Pilihan", price: 15000, image: "https://via.placeholder.com/100x100/ff6b35/ffffff?text=SW" };
+        let appliedVoucher = null;
+
+        // Initialize purchase page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("🚀 Purchase page loading...");
+            
+            // Get product data from localStorage if available
+            const savedProduct = localStorage.getItem('voksmart_selected_product');
+            if (savedProduct) {
+                try {
+                    productData = JSON.parse(savedProduct);
+                    console.log("✅ Product data loaded:", productData);
+                } catch (e) {
+                    console.log("⚠️ Using default product data");
+                }
+            }
+            
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('voksmart_current_user');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    showPurchaseContent();
+                    console.log("✅ User logged in:", currentUser.name);
+                } catch (e) {
+                    showLoginRequired();
+                }
+            } else {
+                showLoginRequired();
+            }
+            
+            // Update auth UI
+            updateAuthUI();
+            
+            // Load product info
+            loadProductInfo();
+            
+            // Calculate initial total
+            calculateTotal();
+        });
+
+        function loadProductInfo() {
+            document.getElementById('productName').textContent = productData.name;
+            document.getElementById('productPrice').textContent = `Rp ${productData.price.toLocaleString('id-ID')}`;
+            if (productData.image) {
+                document.getElementById('productImage').src = productData.image;
+            }
+        }
+
+        function showLoginRequired() {
+            document.getElementById('loginRequired').style.display = 'block';
+            document.getElementById('purchaseContent').style.display = 'none';
+        }
+
+        function showPurchaseContent() {
+            document.getElementById('loginRequired').style.display = 'none';
+            document.getElementById('purchaseContent').style.display = 'block';
+        }
+
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let newQuantity = parseInt(quantityInput.value) + change;
+            
+            if (newQuantity < 1) newQuantity = 1;
+            if (newQuantity > 10) newQuantity = 10;
+            
+            quantityInput.value = newQuantity;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const duration = parseInt(document.getElementById('duration').value);
+            const basePrice = productData.price;
+
+            // Calculate subtotal
+            const subtotal = basePrice * quantity * duration;
+
+            // Duration discount
+            let durationDiscountPercent = 0;
+            let durationDiscountText = '';
+            
+            switch(duration) {
+                case 3:
+                    durationDiscountPercent = 0.05;
+                    durationDiscountText = '3 bulan (Diskon 5%)';
+                    break;
+                case 6:
+                    durationDiscountPercent = 0.10;
+                    durationDiscountText = '6 bulan (Diskon 10%)';
+                    break;
+                case 12:
+                    durationDiscountPercent = 0.15;
+                    durationDiscountText = '12 bulan (Diskon 15%)';
+                    break;
+                default:
+                    durationDiscountText = '1 bulan';
+            }
+
+            const durationDiscountAmount = subtotal * durationDiscountPercent;
+
+            // Voucher discount
+            let voucherDiscountAmount = 0;
+            if (appliedVoucher) {
+                voucherDiscountAmount = (subtotal - durationDiscountAmount) * (appliedVoucher.discount / 100);
+            }
+
+            // Calculate final total
+            const total = subtotal - durationDiscountAmount - voucherDiscountAmount;
+
+            // Update display
+            document.getElementById('pricePerMonth').textContent = `Rp ${basePrice.toLocaleString('id-ID')}`;
+            document.getElementById('quantityDisplay').textContent = `${quantity} lisensi`;
+            document.getElementById('durationDisplay').textContent = durationDiscountText;
+            document.getElementById('subtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            
+            // Duration discount row
+            const durationDiscountRow = document.getElementById('durationDiscountRow');
+            if (durationDiscountAmount > 0) {
+                durationDiscountRow.style.display = 'flex';
+                document.getElementById('durationDiscount').textContent = `-Rp ${durationDiscountAmount.toLocaleString('id-ID')}`;
+            } else {
+                durationDiscountRow.style.display = 'none';
+            }
+
+            // Voucher discount row
+            const voucherDiscountRow = document.getElementById('voucherDiscountRow');
+            if (voucherDiscountAmount > 0) {
+                voucherDiscountRow.style.display = 'flex';
+                document.getElementById('voucherDiscount').textContent = `-Rp ${voucherDiscountAmount.toLocaleString('id-ID')}`;
+            } else {
+                voucherDiscountRow.style.display = 'none';
+            }
+
+            document.getElementById('totalPrice').textContent = `Rp ${Math.round(total).toLocaleString('id-ID')}`;
+        }
+
+        function useVoucher(code, discount) {
+            document.getElementById('voucherCode').value = code;
+            applyVoucher();
+        }
+
+        function applyVoucher() {
+            const voucherCode = document.getElementById('voucherCode').value.trim().toUpperCase();
+            const voucherMessage = document.getElementById('voucherMessage');
+
+            // Available vouchers
+            const vouchers = {
+                'MAHASISWA10': { discount: 10, description: 'Diskon 10% untuk mahasiswa' },
+                'NEWUSER15': { discount: 15, description: 'Diskon 15% untuk pengguna baru' },
+                'VOKASI20': { discount: 20, description: 'Diskon 20% khusus Fakultas Vokasi' }
+            };
+
+            if (voucherCode === '') {
+                appliedVoucher = null;
+                voucherMessage.style.display = 'none';
+                calculateTotal();
+                return;
+            }
+
+            if (vouchers[voucherCode]) {
+                appliedVoucher = {
+                    code: voucherCode,
+                    discount: vouchers[voucherCode].discount,
+                    description: vouchers[voucherCode].description
+                };
+                
+                voucherMessage.textContent = `✅ Voucher berhasil diterapkan! ${appliedVoucher.description}`;
+                voucherMessage.className = 'voucher-message success';
+                voucherMessage.style.display = 'block';
+            } else {
+                appliedVoucher = null;
+                voucherMessage.textContent = '❌ Kode voucher tidak valid';
+                voucherMessage.className = 'voucher-message error';
+                voucherMessage.style.display = 'block';
+            }
+
+            calculateTotal();
+        }
+
+        function confirmPurchase() {
+            if (!currentUser) {
+                alert('Silakan login terlebih dahulu!');
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const duration = parseInt(document.getElementById('duration').value);
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            const total = document.getElementById('totalPrice').textContent;
+
+            const confirmMessage = `Konfirmasi Pembelian\n\nProduk: ${productData.name}\nJumlah: ${quantity} lisensi\nDurasi: ${duration} bulan\nTotal: ${total}\nMetode: ${selectedPayment.toUpperCase()}\nPembeli: ${currentUser.name}\n\nLanjutkan pembelian?`;
+
+            if (confirm(confirmMessage)) {
+                processPurchase();
+            }
+        }
+
+        function processPurchase() {
+            // Show loading
+            const purchaseBtn = document.getElementById('purchaseBtn');
+            purchaseBtn.textContent = '⏳ Memproses...';
+            purchaseBtn.disabled = true;
+
+            // Simulate processing
+            setTimeout(() => {
+                const quantity = parseInt(document.getElementById('quantity').value);
+                const duration = parseInt(document.getElementById('duration').value);
+                const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+                const totalText = document.getElementById('totalPrice').textContent;
+
+                // Show success message
+                let voucherInfo = appliedVoucher ? `\nVoucher: ${appliedVoucher.code} (${appliedVoucher.discount}% off)` : '';
+                const successMessage = `🎉 Pembelian Berhasil!\n\nProduk: ${productData.name}\nJumlah: ${quantity} lisensi\nDurasi: ${duration} bulan${voucherInfo}\nTotal: ${totalText}\nMetode: ${selectedPayment.toUpperCase()}\n\nLink download dan invoice akan dikirim ke email ${currentUser.email} dalam 5 menit.\n\nTerima kasih telah berbelanja di VokSmart!`;
+
+                alert(successMessage);
+
+                // Clear selected product
+                localStorage.removeItem('voksmart_selected_product');
+
+                // Redirect to home
+                window.location.href = 'index.html';
+
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
